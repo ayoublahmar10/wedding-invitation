@@ -15,7 +15,7 @@ export const weddingConfig = {
   },
 
   // Musique
-  musicUrl: "/music.mp3",
+  musicUrl: "music/music.mp3",
 
   // RSVP
   rsvp: {
