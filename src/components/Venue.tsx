@@ -23,8 +23,8 @@ export function Venue() {
         </div>
         <p className={`${
           isAr
-            ? 'font-arabic text-text-secondary text-sm'
-            : 'font-serif uppercase tracking-[0.25em] text-text-secondary text-[11px] sm:text-xs'
+            ? 'font-arabic text-text-primary text-sm'
+            : 'font-serif uppercase tracking-[0.15em] text-text-primary text-xs sm:text-sm'
         }`}>
           {t.venue}
         </p>
@@ -70,7 +70,7 @@ export function Venue() {
         <h3 className="font-script text-curtain text-3xl sm:text-4xl mb-2">
           {weddingConfig.venue.name}
         </h3>
-        <p className={`text-text-secondary text-sm ${isAr ? 'font-arabic' : 'font-serif tracking-wide'}`}>
+        <p className={`text-text-primary text-sm ${isAr ? 'font-arabic' : 'font-serif tracking-wide'}`}>
           {weddingConfig.venue.address}
         </p>
       </motion.div>
@@ -84,16 +84,9 @@ export function Venue() {
         href={weddingConfig.venue.mapsUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className={`mt-8 inline-flex items-center gap-2 px-7 py-3 transition-colors duration-200 group ${
+        className={`mt-8 inline-flex items-center gap-2 px-7 py-4 transition-colors duration-200 border border-gold/50 text-text-primary hover:bg-curtain hover:border-curtain hover:text-ivory active:bg-curtain active:border-curtain active:text-ivory ${
           isAr ? 'font-arabic text-sm' : 'font-serif uppercase tracking-[0.2em] text-xs sm:text-[11px]'
-        } text-text-primary hover:text-ivory`}
-        style={{
-          border: '1px solid rgba(212,175,55,0.5)',
-          background: 'transparent',
-          position: 'relative',
-        }}
-        onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = '#8B1A1A'; (e.currentTarget as HTMLAnchorElement).style.borderColor = '#8B1A1A'; }}
-        onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = 'transparent'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(212,175,55,0.5)'; }}
+        }`}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />

@@ -13,7 +13,7 @@ function CountBox({ value, label }: CountBoxProps) {
     <div className="flex flex-col items-center gap-2">
       {/* Box with fine bordeaux border */}
       <div
-        className="w-[4.5rem] h-[4.5rem] sm:w-20 sm:h-20 flex items-center justify-center bg-ivory relative"
+        className="w-14 h-14 sm:w-[4.5rem] sm:h-[4.5rem] md:w-20 md:h-20 flex items-center justify-center bg-ivory relative"
         style={{
           border: '1px solid rgba(139,26,26,0.35)',
           boxShadow: '0 1px 8px rgba(139,26,26,0.08), inset 0 1px 0 rgba(255,255,255,0.6)',
@@ -26,13 +26,13 @@ function CountBox({ value, label }: CountBoxProps) {
         <span className="absolute bottom-0.5 right-0.5 w-1.5 h-1.5 border-b border-r border-gold/40" />
 
         <span className="font-serif font-bold text-curtain tabular-nums leading-none"
-          style={{ fontSize: 'clamp(1.6rem, 8vw, 2.2rem)' }}>
+          style={{ fontSize: 'clamp(1.2rem, 7vw, 2.2rem)' }}>
           {String(value).padStart(2, '0')}
         </span>
       </div>
 
       {/* Label */}
-      <span className="font-serif uppercase tracking-[0.18em] text-text-secondary text-[9px] sm:text-[10px]">
+      <span className="font-serif uppercase tracking-[0.12em] text-text-primary text-[11px] sm:text-xs">
         {label}
       </span>
     </div>
@@ -89,7 +89,7 @@ export function Countdown() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.15 }}
-        className="flex items-end gap-2 sm:gap-3"
+        className="flex items-end gap-1 sm:gap-2 md:gap-3"
       >
         <CountBox value={days}    label={t.days}  />
         <Colon />
@@ -106,9 +106,9 @@ export function Countdown() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.3 }}
-        className={`mt-8 text-text-secondary ${
+        className={`mt-8 text-text-primary ${
           isAr
-            ? 'font-arabic text-sm'
+            ? 'font-arabic text-base'
             : 'font-serif italic text-sm tracking-wide'
         }`}
       >

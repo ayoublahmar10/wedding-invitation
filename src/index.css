@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── CSS custom properties ──────────────────────────────────── */
+/* ── CSS custom properties ─────────────────────────────────── */
 :root {
   --curtain-dark:  #6B0F0F;
   --curtain:       #8B1A1A;
@@ -13,12 +13,19 @@
   --text-primary:  #4A1A1A;
   --text-secondary:#8B7355;
   --white:         #FFFDF9;
+
+  /* Drape width — thin on mobile so content stays visible */
+  --drape-w: 6%;
+}
+@media (min-width: 768px) {
+  :root { --drape-w: 16%; }
+}
+@media (min-width: 1024px) {
+  :root { --drape-w: 28%; }
 }
 
 /* ── Base reset ─────────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
+*, *::before, *::after { box-sizing: border-box; }
 
 html {
   scroll-behavior: smooth;
@@ -31,100 +38,252 @@ body {
   background-color: var(--white);
   color: var(--text-primary);
   overflow-x: hidden;
+  overscroll-behavior-y: contain;
 }
 
 #root {
   width: 100%;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/* ── Curtain panels ─────────────────────────────────────────── */
-.curtain-panel {
+/* Prevent double-tap zoom delay on buttons and links */
+button, a {
+  touch-action: manipulation;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RIDEAU VELOURS — texture réaliste
+   ═══════════════════════════════════════════════════════════ */
+
+/* Velours : plis verticaux simulés par gradient répété,
+   avec couche de lustre (shimmer) et ombre portée interne */
+.curtain-velvet {
+  background:
+    /* lustre central (reflet velours) */
+    radial-gradient(
+      ellipse 60% 100% at 50% 20%,
+      rgba(180, 40, 40, 0.18) 0%,
+      transparent 70%
+    ),
+    /* plis répétés — chaque "fold" = ~40px */
+    repeating-linear-gradient(
+      to right,
+      #5A0A0A   0px,
+      #7A1414   4px,
+      #8B1A1A  10px,
+      #9E2222  18px,
+      #A52A2A  24px,
+      #9E2222  30px,
+      #8B1A1A  36px,
+      #7A1414  40px,
+      #6B0F0F  48px,
+      #5A0A0A  54px,
+      #7A1414  60px,
+      #8B1A1A  66px,
+      #9A2020  72px,
+      #8B1A1A  78px,
+      #7A1414  84px,
+      #6B0F0F  90px,
+      #5A0A0A  96px,
+      #6B1010 102px,
+      #7A1414 108px,
+      #8B1A1A 116px,
+      #9E2222 124px,
+      #A52A2A 130px,
+      #9E2222 136px,
+      #8B1A1A 142px,
+      #7A1414 148px,
+      #5A0A0A 156px
+    );
+  will-change: transform;
+  transform-origin: top center;
+}
+
+/* Ombre portée interne gauche (bord intérieur du rideau gauche) */
+.curtain-panel-left::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    /* ombre bord droit (intérieur) */
+    linear-gradient(to left, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 18%, transparent 50%),
+    /* ombre bord gauche (extérieur) */
+    linear-gradient(to right, rgba(0,0,0,0.3) 0%, transparent 30%),
+    /* lustre diagonal */
+    linear-gradient(160deg, rgba(255,255,255,0.06) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+/* Ombre portée interne droite */
+.curtain-panel-right::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 18%, transparent 50%),
+    linear-gradient(to left, rgba(0,0,0,0.3) 0%, transparent 30%),
+    linear-gradient(20deg, rgba(255,255,255,0.06) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+/* ── Pelmet / liston haut ── */
+.curtain-pelmet {
+  height: 64px;
+  background:
+    linear-gradient(to bottom, #3D0808 0%, #6B0F0F 60%, #7A1414 100%);
+  border-bottom: 2px solid rgba(212,175,55,0.5);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  /* Festons via clip-path */
+  clip-path: polygon(
+    0% 0%, 100% 0%, 100% 60%,
+    96% 100%, 92% 60%,
+    88% 100%, 84% 60%,
+    80% 100%, 76% 60%,
+    72% 100%, 68% 60%,
+    64% 100%, 60% 60%,
+    56% 100%, 52% 60%,
+    48% 100%, 44% 60%,
+    40% 100%, 36% 60%,
+    32% 100%, 28% 60%,
+    24% 100%, 20% 60%,
+    16% 100%, 12% 60%,
+    8%  100%, 4%  60%,
+    0%  100%
+  );
+}
+
+/* ── Frange dorée bas de rideau ── */
+.curtain-fringe {
+  height: 28px;
   background: repeating-linear-gradient(
     to right,
-    var(--curtain-dark)    0px,
-    var(--curtain)         8px,
-    var(--curtain-light)  16px,
-    var(--curtain)        24px,
-    var(--curtain-dark)   32px
+    transparent       0px,
+    transparent       3px,
+    rgba(212,175,55,0.7) 3px,
+    rgba(212,175,55,0.7) 5px,
+    transparent       5px,
+    transparent       8px
   );
-  will-change: transform;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%);
 }
 
-/* Subtle vertical wave via clip-path on folds */
-.curtain-left {
+/* ── Drapes latéraux (après ouverture) ── */
+/* Forme courbée simulant le tombé du tissu */
+.curtain-drape-left {
+  background:
+    radial-gradient(
+      ellipse 80% 120% at 95% 30%,
+      rgba(180, 40, 40, 0.15) 0%,
+      transparent 65%
+    ),
+    repeating-linear-gradient(
+      to right,
+      #5A0A0A  0px, #7A1414  6px, #8B1A1A 14px,
+      #9E2222 22px, #8B1A1A 30px, #7A1414 38px,
+      #6B0F0F 46px, #5A0A0A 54px, #7A1414 62px,
+      #8B1A1A 70px, #9A2020 80px, #8B1A1A 90px,
+      #6B0F0F 100px
+    );
+  /* Bord intérieur courbé (tombé du rideau) */
   clip-path: polygon(
-    0% 0%, 3% 5%, 0% 10%, 3% 20%, 0% 30%,
-    3% 40%, 0% 50%, 3% 60%, 0% 70%, 3% 80%,
-    0% 90%, 3% 100%, 0% 100%, 0% 0%,
-    100% 0%, 100% 100%, 3% 100%
+    0% 0%,
+    100% 0%,
+    100% 8%,
+    85%  15%,
+    75%  28%,
+    70%  42%,
+    68%  58%,
+    70%  72%,
+    75%  84%,
+    82%  93%,
+    90%  98%,
+    100% 100%,
+    0%   100%
   );
+  box-shadow: inset -12px 0 32px rgba(0,0,0,0.4);
 }
 
-.curtain-right {
+.curtain-drape-right {
+  background:
+    radial-gradient(
+      ellipse 80% 120% at 5% 30%,
+      rgba(180, 40, 40, 0.15) 0%,
+      transparent 65%
+    ),
+    repeating-linear-gradient(
+      to left,
+      #5A0A0A  0px, #7A1414  6px, #8B1A1A 14px,
+      #9E2222 22px, #8B1A1A 30px, #7A1414 38px,
+      #6B0F0F 46px, #5A0A0A 54px, #7A1414 62px,
+      #8B1A1A 70px, #9A2020 80px, #8B1A1A 90px,
+      #6B0F0F 100px
+    );
   clip-path: polygon(
-    97% 0%, 100% 5%, 97% 10%, 100% 20%, 97% 30%,
-    100% 40%, 97% 50%, 100% 60%, 97% 70%, 100% 80%,
-    97% 90%, 100% 100%, 100% 0%, 0% 0%, 0% 100%, 97% 100%
+    0%   0%,
+    100% 0%,
+    100% 100%,
+    10%  100%,
+    18%  98%,
+    25%  93%,
+    30%  84%,
+    32%  72%,
+    30%  58%,
+    28%  42%,
+    25%  28%,
+    15%  15%,
+    0%   8%
+  );
+  box-shadow: inset 12px 0 32px rgba(0,0,0,0.4);
+}
+
+/* ── Pelmet drape (after open — stays fixed top) ── */
+.drape-pelmet {
+  height: 64px;
+  background: linear-gradient(to bottom, #3D0808 0%, #6B0F0F 70%, #7A1414 100%);
+  border-bottom: 2px solid rgba(212,175,55,0.5);
+  box-shadow: 0 6px 30px rgba(0,0,0,0.5);
+  clip-path: polygon(
+    0% 0%, 100% 0%, 100% 60%,
+    96% 100%, 92% 60%, 88% 100%, 84% 60%, 80% 100%, 76% 60%,
+    72% 100%, 68% 60%, 64% 100%, 60% 60%, 56% 100%, 52% 60%,
+    48% 100%, 44% 60%, 40% 100%, 36% 60%, 32% 100%, 28% 60%,
+    24% 100%, 20% 60%, 16% 100%, 12% 60%, 8% 100%, 4% 60%,
+    0%  100%
   );
 }
 
-/* ── Curtain open animation ─────────────────────────────────── */
-.curtain-opening-left {
-  animation: curtainLeft 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+/* Dorure fil du liston */
+.drape-pelmet::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right,
+    #9A7B1A, #D4AF37 20%, #E8D48B 50%, #D4AF37 80%, #9A7B1A
+  );
 }
 
-.curtain-opening-right {
-  animation: curtainRight 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards;
-}
-
-@keyframes curtainLeft {
-  from { transform: translateX(0);     }
-  to   { transform: translateX(-100%); }
-}
-
-@keyframes curtainRight {
-  from { transform: translateX(0);    }
-  to   { transform: translateX(100%); }
-}
-
-/* ── Curtain top fade (transition to content) ───────────────── */
-.curtain-top-fade {
-  background: linear-gradient(to bottom, var(--curtain-dark), transparent);
-  opacity: 0.15;
-}
-
-/* ── Audio pulse animation ──────────────────────────────────── */
+/* ── Audio pulse ── */
 .audio-pulse {
   animation: pulse-ring 1.8s ease-in-out infinite;
 }
-
 @keyframes pulse-ring {
-  0%   { box-shadow: 0 0 0 0   rgba(212, 175, 55, 0.5); }
-  70%  { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0);  }
-  100% { box-shadow: 0 0 0 0   rgba(212, 175, 55, 0);   }
+  0%   { box-shadow: 0 0 0 0    rgba(212,175,55,0.5); }
+  70%  { box-shadow: 0 0 0 10px rgba(212,175,55,0);   }
+  100% { box-shadow: 0 0 0 0    rgba(212,175,55,0);   }
 }
 
-/* ── RTL overrides ──────────────────────────────────────────── */
+/* ── RTL overrides ── */
+[dir="rtl"] .names-ltr { direction: ltr; }
 
-/* Names always stay LTR regardless of page direction */
-[dir="rtl"] .names-ltr {
-  direction: ltr;
-}
-
-/* Flip the fixed UI buttons in RTL */
-[dir="rtl"] .lang-switcher {
-  right: auto;
-  left: 1rem;
-}
-
-[dir="rtl"] .audio-btn {
-  right: auto;
-  left: 1rem;
-}
-
-/* ── Selection color ────────────────────────────────────────── */
+/* ── Selection ── */
 ::selection {
   background: var(--gold-light);
   color: var(--curtain-dark);
 }
+
+

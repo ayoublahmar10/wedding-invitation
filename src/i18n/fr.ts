@@ -4,6 +4,7 @@ export interface Translations {
   reveal: string;
   scratchInstruction: string;
   scratchHint: string;
+  scrollHint: string;
   countdown: string;
   days: string;
   hours: string;
@@ -31,6 +32,7 @@ export const fr: Translations = {
   reveal: "Révéler",
   scratchInstruction: "GRATTEZ POUR DÉCOUVRIR LA DATE",
   scratchHint: "Grattez les trois cercles pour continuer",
+  scrollHint: "Faites défiler",
   countdown: "Compte à rebours",
   days: "JOURS",
   hours: "HEURES",

@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from '../i18n';
 import { weddingConfig } from '../config/wedding';
@@ -12,7 +12,7 @@ export function RSVP() {
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState<Status>('idle');
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: { preventDefault(): void }) => {
     e.preventDefault();
     setStatus('loading');
 
@@ -37,12 +37,13 @@ export function RSVP() {
     }
   };
 
-  const inputClass = `w-full bg-ivory border border-gold/40 text-text-primary font-serif text-sm px-4 py-3 placeholder:text-text-secondary/50 focus:outline-none focus:border-gold transition-colors duration-200 ${
+  // text-base (16px) prevents iOS Safari from auto-zooming on input focus
+  const inputClass = `w-full bg-ivory border border-gold/40 text-text-primary font-serif text-base px-4 py-3 placeholder:text-text-secondary/50 focus:outline-none focus:border-gold transition-colors duration-200 ${
     language === 'ar' ? 'font-arabic text-right' : ''
   }`;
 
-  const labelClass = `font-serif uppercase tracking-[0.2em] text-text-secondary text-xs mb-1 block ${
-    language === 'ar' ? 'font-arabic tracking-normal text-sm' : ''
+  const labelClass = `font-serif uppercase tracking-[0.12em] text-text-primary text-sm mb-2 block ${
+    language === 'ar' ? 'font-arabic tracking-normal text-base' : ''
   }`;
 
   return (

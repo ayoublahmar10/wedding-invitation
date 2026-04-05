@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useScratchCanvas } from '../hooks/useScratchCanvas';
 import { useTranslation } from '../i18n';
 import { weddingConfig } from '../config/wedding';
 import { Confetti } from './Confetti';
 
-const RADIUS = 55; // 110px diameter
+const RADIUS_MOBILE = 46; // 92px — fits 3 circles on 375px screens
+const RADIUS_DESKTOP = 55; // 110px
 
 interface ScratchCircleProps {
   label: string;
@@ -24,21 +25,21 @@ function ScratchCircle({ label, sublabel, size, onRevealed }: ScratchCircleProps
 
   return (
     <div className="flex flex-col items-center gap-3">
-      {/* Hand animation hint — shown before any reveal on this circle */}
+      {/* Hand animation hint — finger points DOWN toward the circle */}
       <AnimatePresence>
         {!isRevealed && (
           <motion.div
-            initial={{ opacity: 0.8 }}
-            animate={{ y: [0, -6, 0], opacity: [0.8, 1, 0.8] }}
+            initial={{ opacity: 0.9 }}
+            animate={{ y: [0, 6, 0], opacity: [0.9, 1, 0.9] }}
             exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
-            className="text-2xl select-none"
+            transition={{ repeat: Infinity, duration: 1.4, ease: 'easeInOut' }}
+            className="text-3xl select-none"
           >
-            👆
+            👇
           </motion.div>
         )}
       </AnimatePresence>
-      {isRevealed && <div className="h-8" />}
+      {isRevealed && <div className="h-10" />}
 
       {/* Circle */}
       <div
@@ -76,10 +77,28 @@ function ScratchCircle({ label, sublabel, size, onRevealed }: ScratchCircleProps
           </AnimatePresence>
         </div>
 
+        {/* Shimmer sweep — suggests the circle is scratchable */}
+        {!isRevealed && (
+          <motion.div
+            className="absolute inset-0 rounded-full overflow-hidden pointer-events-none z-10"
+            animate={{ opacity: [0, 0.7, 0] }}
+            transition={{ repeat: Infinity, duration: 2.2, ease: 'easeInOut', repeatDelay: 0.8 }}
+          >
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  'linear-gradient(110deg, transparent 25%, rgba(255,255,255,0.55) 50%, transparent 75%)',
+                transform: 'skewX(-10deg)',
+              }}
+            />
+          </motion.div>
+        )}
+
         {/* Canvas scratch overlay */}
         <canvas
           ref={canvasRef}
-          className="absolute inset-0 rounded-full touch-none cursor-crosshair"
+          className="absolute inset-0 rounded-full touch-none cursor-crosshair z-20"
           style={{
             width: size,
             height: size,
@@ -91,7 +110,7 @@ function ScratchCircle({ label, sublabel, size, onRevealed }: ScratchCircleProps
       </div>
 
       {/* Sublabel */}
-      <p className="font-serif uppercase tracking-[0.18em] text-text-secondary/60 text-[10px]">
+      <p className="font-serif uppercase tracking-[0.12em] text-text-primary text-[11px] sm:text-xs">
         {sublabel}
       </p>
     </div>
@@ -112,6 +131,11 @@ export function ScratchReveal() {
   const [revealedCount, setRevealedCount] = useState(0);
   const allRevealed = revealedCount >= 3;
   const isAr = language === 'ar';
+
+  const radius = useMemo(
+    () => (window.innerWidth < 640 ? RADIUS_MOBILE : RADIUS_DESKTOP),
+    []
+  );
 
   const handleRevealed = () => setRevealedCount((n) => Math.min(n + 1, 3));
   const { day, month, year } = getDateParts(weddingConfig.weddingDate);
@@ -141,7 +165,7 @@ export function ScratchReveal() {
         </div>
 
         {/* Instruction */}
-        <p className={`${isAr ? 'font-arabic text-text-secondary text-sm' : 'font-serif uppercase tracking-[0.25em] text-text-secondary text-[11px] sm:text-xs'}`}>
+        <p className={`${isAr ? 'font-arabic text-text-primary text-base font-medium' : 'font-serif uppercase tracking-[0.12em] text-text-primary text-sm sm:text-base font-semibold'}`}>
           {t.scratchInstruction}
         </p>
       </motion.div>
@@ -152,16 +176,16 @@ export function ScratchReveal() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.15 }}
-        className="flex items-end justify-center gap-5 sm:gap-8 mb-6"
+        className="flex items-end justify-center gap-3 md:gap-6 mb-6"
       >
-        <ScratchCircle label={day}   sublabel={isAr ? 'يوم' : 'Jour'}  size={RADIUS * 2}      onRevealed={handleRevealed} />
-        <ScratchCircle label={month} sublabel={isAr ? 'شهر' : 'Mois'}  size={RADIUS * 2 + 16} onRevealed={handleRevealed} />
-        <ScratchCircle label={year}  sublabel={isAr ? 'سنة' : 'Année'} size={RADIUS * 2}      onRevealed={handleRevealed} />
+        <ScratchCircle label={day}   sublabel={isAr ? 'يوم' : 'Jour'}  size={radius * 2}      onRevealed={handleRevealed} />
+        <ScratchCircle label={month} sublabel={isAr ? 'شهر' : 'Mois'}  size={radius * 2 + 16} onRevealed={handleRevealed} />
+        <ScratchCircle label={year}  sublabel={isAr ? 'سنة' : 'Année'} size={radius * 2}      onRevealed={handleRevealed} />
       </motion.div>
 
       {/* Hint text */}
       {!allRevealed && (
-        <p className={`text-center text-text-secondary/50 mt-2 ${isAr ? 'font-arabic text-sm' : 'font-serif text-xs tracking-wide'}`}>
+        <p className={`text-center text-text-primary mt-2 ${isAr ? 'font-arabic text-sm' : 'font-serif text-sm tracking-wide'}`}>
           {t.scratchHint}
         </p>
       )}

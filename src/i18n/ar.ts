@@ -7,6 +7,7 @@ export const ar: Translations = {
   reveal: "اكتشف",
   scratchInstruction: "امسح لاكتشاف التاريخ",
   scratchHint: "امسح الدوائر الثلاث للمتابعة",
+  scrollHint: "اسحب للأسفل",
   countdown: "العد التنازلي",
   days: "أيام",
   hours: "ساعات",

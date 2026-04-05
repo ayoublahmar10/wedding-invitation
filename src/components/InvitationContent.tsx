@@ -16,6 +16,7 @@ export function InvitationContent() {
   const { t, language } = useTranslation();
   const isAr = language === 'ar';
 
+
   return (
     <section className="relative w-full min-h-screen bg-ivory flex flex-col items-center justify-center overflow-hidden py-24 px-6">
 
@@ -31,8 +32,8 @@ export function InvitationContent() {
         {...rise(0.12)}
         className={`text-center max-w-xs sm:max-w-sm leading-relaxed mb-10 ${
           isAr
-            ? 'font-arabic text-text-secondary text-sm leading-loose'
-            : 'font-serif uppercase tracking-[0.25em] text-text-secondary text-[11px] sm:text-xs'
+            ? 'font-arabic text-text-primary text-sm leading-loose'
+            : 'font-serif uppercase tracking-[0.15em] text-text-primary text-xs sm:text-sm'
         }`}
       >
         {t.invitation}
@@ -85,8 +86,8 @@ export function InvitationContent() {
         {...rise(0.54)}
         className={`text-center max-w-xs sm:max-w-sm leading-loose ${
           isAr
-            ? 'font-arabic text-text-secondary text-sm leading-loose'
-            : 'font-serif uppercase tracking-[0.18em] text-text-secondary text-[11px] sm:text-xs'
+            ? 'font-arabic text-text-primary text-sm leading-loose'
+            : 'font-serif uppercase tracking-[0.12em] text-text-primary text-xs sm:text-sm'
         }`}
       >
         {t.message}
@@ -98,6 +99,7 @@ export function InvitationContent() {
         <span className="text-gold text-lg tracking-[0.5em]">✦</span>
         <div className="h-px w-10 bg-gradient-to-l from-transparent to-gold/60" />
       </motion.div>
+
     </section>
   );
 }
