@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS custom properties ──────────────────────────────────── */
+:root {
+  --curtain-dark:  #6B0F0F;
+  --curtain:       #8B1A1A;
+  --curtain-light: #A52A2A;
+  --gold:          #D4AF37;
+  --gold-light:    #E8D48B;
+  --cream:         #FAF6F0;
+  --text-primary:  #4A1A1A;
+  --text-secondary:#8B7355;
+  --white:         #FFFDF9;
+}
+
+/* ── Base reset ─────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--white);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ── Curtain panels ─────────────────────────────────────────── */
+.curtain-panel {
+  background: repeating-linear-gradient(
+    to right,
+    var(--curtain-dark)    0px,
+    var(--curtain)         8px,
+    var(--curtain-light)  16px,
+    var(--curtain)        24px,
+    var(--curtain-dark)   32px
+  );
+  will-change: transform;
+}
+
+/* Subtle vertical wave via clip-path on folds */
+.curtain-left {
+  clip-path: polygon(
+    0% 0%, 3% 5%, 0% 10%, 3% 20%, 0% 30%,
+    3% 40%, 0% 50%, 3% 60%, 0% 70%, 3% 80%,
+    0% 90%, 3% 100%, 0% 100%, 0% 0%,
+    100% 0%, 100% 100%, 3% 100%
+  );
+}
+
+.curtain-right {
+  clip-path: polygon(
+    97% 0%, 100% 5%, 97% 10%, 100% 20%, 97% 30%,
+    100% 40%, 97% 50%, 100% 60%, 97% 70%, 100% 80%,
+    97% 90%, 100% 100%, 100% 0%, 0% 0%, 0% 100%, 97% 100%
+  );
+}
+
+/* ── Curtain open animation ─────────────────────────────────── */
+.curtain-opening-left {
+  animation: curtainLeft 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+
+.curtain-opening-right {
+  animation: curtainRight 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+
+@keyframes curtainLeft {
+  from { transform: translateX(0);     }
+  to   { transform: translateX(-100%); }
+}
+
+@keyframes curtainRight {
+  from { transform: translateX(0);    }
+  to   { transform: translateX(100%); }
+}
+
+/* ── Curtain top fade (transition to content) ───────────────── */
+.curtain-top-fade {
+  background: linear-gradient(to bottom, var(--curtain-dark), transparent);
+  opacity: 0.15;
+}
+
+/* ── Audio pulse animation ──────────────────────────────────── */
+.audio-pulse {
+  animation: pulse-ring 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0   rgba(212, 175, 55, 0.5); }
+  70%  { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0);  }
+  100% { box-shadow: 0 0 0 0   rgba(212, 175, 55, 0);   }
+}
+
+/* ── RTL overrides ──────────────────────────────────────────── */
+
+/* Names always stay LTR regardless of page direction */
+[dir="rtl"] .names-ltr {
+  direction: ltr;
+}
+
+/* Flip the fixed UI buttons in RTL */
+[dir="rtl"] .lang-switcher {
+  right: auto;
+  left: 1rem;
+}
+
+[dir="rtl"] .audio-btn {
+  right: auto;
+  left: 1rem;
+}
+
+/* ── Selection color ────────────────────────────────────────── */
+::selection {
+  background: var(--gold-light);
+  color: var(--curtain-dark);
+}
