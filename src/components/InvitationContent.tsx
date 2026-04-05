@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from '../i18n';
-import { weddingConfig } from '../config/wedding';
 
 const rise = (delay: number) => ({
   initial: { opacity: 0, y: 28 },
