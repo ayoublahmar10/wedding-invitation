@@ -23,4 +23,6 @@ export const ar: Translations = {
   rsvpSubmit: "تأكيد",
   rsvpSuccess: "شكراً! تم تسجيل ردكم.",
   rsvpError: "حدث خطأ. يرجى المحاولة مرة أخرى.",
+  groomName: "أيوب",
+  brideName: "صفاء"
 };

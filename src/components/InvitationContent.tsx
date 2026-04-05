@@ -43,10 +43,10 @@ export function InvitationContent() {
       <motion.div {...rise(0.26)} className="text-center mb-8" dir="ltr">
         {/* Groom name */}
         <h1
-          className="font-script text-curtain leading-none"
+        className="font-weddingNames italic text-curtain leading-[0.9] font-medium"
           style={{ fontSize: 'clamp(3.5rem, 15vw, 5.5rem)' }}
         >
-          {weddingConfig.groomName}
+          {t.groomName}
         </h1>
 
         {/* Ampersand separator */}
@@ -63,10 +63,10 @@ export function InvitationContent() {
 
         {/* Bride name */}
         <h1
-          className="font-script text-curtain leading-none"
+        className="font-weddingNames italic text-curtain leading-[0.9] font-medium"
           style={{ fontSize: 'clamp(3.5rem, 15vw, 5.5rem)' }}
         >
-          {weddingConfig.brideName}
+         {t.brideName}
         </h1>
       </motion.div>
 

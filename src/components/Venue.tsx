@@ -30,7 +30,7 @@ export function Venue() {
         </p>
       </motion.div>
 
-      {/* Illustration placeholder */}
+          {/* Venue image */}
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -38,29 +38,24 @@ export function Venue() {
         transition={{ duration: 0.7, delay: 0.1 }}
         className="w-full max-w-sm mb-8"
       >
-        <div
-          className="w-full h-48 sm:h-56 flex flex-col items-center justify-center gap-3 bg-ivory/60 relative"
-          style={{ border: '2px dashed rgba(212,175,55,0.4)' }}
-        >
+        <div className="relative overflow-hidden rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.12)]">
+          {/* Gold border */}
+          <div className="absolute inset-0 z-10 pointer-events-none rounded-[2rem] border border-gold/30" />
+
+          {/* Soft overlay */}
+          <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/10 via-transparent to-white/10 pointer-events-none" />
+
+          <img
+            src={weddingConfig.venue.image}
+            alt={weddingConfig.venue.name}
+            className="w-full h-56 sm:h-72 object-cover transition-transform duration-700 hover:scale-105"
+          />
+
           {/* Corner ornaments */}
-          <span className="absolute top-2 left-2 text-gold/30 text-xs">✦</span>
-          <span className="absolute top-2 right-2 text-gold/30 text-xs">✦</span>
-          <span className="absolute bottom-2 left-2 text-gold/30 text-xs">✦</span>
-          <span className="absolute bottom-2 right-2 text-gold/30 text-xs">✦</span>
-
-          {/* Building icon */}
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" className="opacity-25">
-            <rect x="8" y="22" width="32" height="20" stroke="#8B7355" strokeWidth="1.5" />
-            <polygon points="4,22 24,6 44,22" stroke="#8B7355" strokeWidth="1.5" fill="none" />
-            {[14, 20, 28, 34].map((x) => (
-              <rect key={x} x={x} y="30" width="4" height="12" stroke="#8B7355" strokeWidth="1" />
-            ))}
-            <rect x="20" y="32" width="8" height="10" stroke="#8B7355" strokeWidth="1" />
-          </svg>
-
-          <p className="font-serif uppercase tracking-[0.3em] text-text-secondary/40 text-[10px]">
-            Illustration du lieu
-          </p>
+          <span className="absolute top-3 left-3 z-20 text-gold/70 text-xs">✦</span>
+          <span className="absolute top-3 right-3 z-20 text-gold/70 text-xs">✦</span>
+          <span className="absolute bottom-3 left-3 z-20 text-gold/70 text-xs">✦</span>
+          <span className="absolute bottom-3 right-3 z-20 text-gold/70 text-xs">✦</span>
         </div>
       </motion.div>
 

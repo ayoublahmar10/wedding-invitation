@@ -20,6 +20,8 @@ export interface Translations {
   rsvpSubmit: string;
   rsvpSuccess: string;
   rsvpError: string;
+  groomName: string;
+  brideName: string
 }
 
 export const fr: Translations = {
@@ -45,4 +47,6 @@ export const fr: Translations = {
   rsvpSubmit: "Confirmer",
   rsvpSuccess: "Merci ! Votre réponse a été enregistrée.",
   rsvpError: "Une erreur est survenue. Veuillez réessayer.",
+  groomName: "Ayoub",
+  brideName: "Safa"
 };

@@ -22,6 +22,7 @@ export default {
         ivory: '#FFFDF9',
       },
       fontFamily: {
+        weddingNames : ['Cormorant Garamond', 'serif'],
         script: ['"Great Vibes"', 'cursive'],
         'script-ar': ['"Aref Ruqaa"', 'serif'],
         serif: ['"Cormorant Garamond"', 'serif'],

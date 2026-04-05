@@ -8,9 +8,10 @@ export const weddingConfig = {
 
   // Lieu
   venue: {
-    name: "Salle des Fêtes Al Andalus",
-    address: "123 Avenue des Roses, Marrakech, Maroc",
-    mapsUrl: "https://maps.google.com/?q=Casablanca+Maroc",
+    name: "Salle des Fêtes Pavillon Maya",
+    address: " 3,5 Km, route de l'Ourika, Marrakech 40000, Maroc",
+    mapsUrl: "https://maps.app.goo.gl/A45cLCjfR7gvt8Bf9",
+    image: '/images/venue.webp',
   },
 
   // Musique
